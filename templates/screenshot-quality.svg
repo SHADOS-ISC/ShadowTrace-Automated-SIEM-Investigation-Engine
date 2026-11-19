@@ -1,80 +1,121 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" font-family="Segoe UI, Roboto, Arial, sans-serif">
-  <!-- Background -->
-  <rect width="1400" height="760" fill="#0b0f14"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="980" viewBox="0 0 1400 980" font-family="Segoe UI, Roboto, Arial, sans-serif">
+  <defs>
+    <linearGradient id="hdr" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0f151d"/>
+      <stop offset="100%" stop-color="#14202e"/>
+    </linearGradient>
+  </defs>
 
-  <!-- Header -->
-  <rect x="0" y="0" width="1400" height="60" fill="#0f151d"/>
+  <!-- Background and header -->
+  <rect width="1400" height="980" fill="#0b0f14"/>
+  <rect x="0" y="0" width="1400" height="60" fill="url(#hdr)"/>
   <line x1="0" y1="60" x2="1400" y2="60" stroke="#243041"/>
-  <text x="20" y="37" font-size="16" font-weight="700" fill="#4cc3ff">CONSOLE SOC · QRadar <tspan fill="#eab308">[DEMO DATA]</tspan></text>
-  <rect x="470" y="14" width="150" height="32" rx="6" fill="#0b0f14" stroke="#243041"/>
-  <text x="482" y="35" font-size="14" fill="#d7e0ea">900001</text>
-  <rect x="632" y="14" width="100" height="32" rx="6" fill="#1f6feb"/>
-  <text x="682" y="35" font-size="14" fill="#ffffff" text-anchor="middle">Analyser</text>
-  <text x="752" y="35" font-size="13" fill="#8a98a8">Analyse terminée en 2 s.</text>
+  <text x="20" y="37" font-size="16" font-weight="700" fill="#4cc3ff" letter-spacing="0.5">SHADOWTRACE · QRadar Investigation <tspan fill="#eab308">[DEMO DATA]</tspan></text>
+  <text x="1380" y="37" font-size="13" fill="#8a98a8" text-anchor="end">Offence #900001 · P3 · Generated 2026-11-16 09:31 UTC</text>
 
-  <!-- Tabs -->
-  <rect x="20" y="72" width="90" height="30" rx="6" fill="#131a22" stroke="#243041"/>
-  <text x="65" y="92" font-size="13" fill="#8a98a8" text-anchor="middle">Synthèse</text>
-  <rect x="118" y="72" width="80" height="30" rx="6" fill="#131a22" stroke="#243041"/>
-  <text x="158" y="92" font-size="13" fill="#8a98a8" text-anchor="middle">Acteurs</text>
-  <rect x="206" y="72" width="100" height="30" rx="6" fill="#131a22" stroke="#243041"/>
-  <text x="256" y="92" font-size="13" fill="#8a98a8" text-anchor="middle">Événements</text>
-  <rect x="314" y="72" width="70" height="30" rx="6" fill="#131a22" stroke="#243041"/>
-  <text x="349" y="92" font-size="13" fill="#8a98a8" text-anchor="middle">Flux</text>
-  <rect x="392" y="72" width="120" height="30" rx="6" fill="#131a22" stroke="#243041"/>
-  <text x="452" y="92" font-size="13" fill="#8a98a8" text-anchor="middle">Payloads &amp; IOC</text>
-  <rect x="520" y="72" width="140" height="30" rx="6" fill="#131a22" stroke="#243041"/>
-  <text x="590" y="92" font-size="13" fill="#8a98a8" text-anchor="middle">MITRE &amp; Kill chain</text>
-  <rect x="668" y="72" width="120" height="30" rx="6" fill="#131a22" stroke="#243041"/>
-  <text x="728" y="92" font-size="13" fill="#8a98a8" text-anchor="middle">Offences liées</text>
-  <rect x="796" y="72" width="120" height="30" rx="6" fill="#131a22" stroke="#243041"/>
-  <text x="856" y="92" font-size="13" fill="#8a98a8" text-anchor="middle">Règles &amp; notes</text>
-  <rect x="924" y="72" width="110" height="30" rx="6" fill="#131a22" stroke="#243041"/>
-  <text x="979" y="92" font-size="13" fill="#8a98a8" text-anchor="middle">Réputation IP</text>
-  <rect x="1042" y="72" width="150" height="30" rx="6" fill="#15263a" stroke="#4cc3ff"/>
-  <text x="1117" y="92" font-size="13" fill="#ffffff" text-anchor="middle">Qualité des données</text>
+  <!-- Decision banner -->
+  <rect x="20" y="80" width="1360" height="92" rx="10" fill="#131a22" stroke="#243041"/>
+  <rect x="20" y="80" width="8" height="92" rx="4" fill="#f97316"/>
+  <text x="48" y="138" font-size="40" font-weight="800" fill="#f97316">P3</text>
+  <text x="140" y="118" font-size="18" font-weight="700" fill="#d7e0ea">INVESTIGATION: medium priority (within 4 h)</text>
+  <text x="140" y="142" font-size="13" fill="#8a98a8">Confidence: Medium · Events and flows partially retrieved · Risk score 6.1/10</text>
+  <text x="140" y="162" font-size="13" fill="#8a98a8">Offence: DEMO Internal host sweeping multiple servers · Source 10.20.1.15 (demo-ws-07)</text>
 
-  <!-- Window and IP card -->
-  <rect x="20" y="120" width="1360" height="130" rx="10" fill="#131a22" stroke="#243041"/>
-  <text x="36" y="144" font-size="14" font-weight="700" fill="#4cc3ff">FENÊTRE ET IP</text>
-  <text x="36" y="174" font-size="13" fill="#8a98a8">Début</text>
-  <text x="260" y="174" font-size="13" fill="#d7e0ea">2026-11-15 08:00 UTC</text>
-  <text x="36" y="200" font-size="13" fill="#8a98a8">Fin</text>
-  <text x="260" y="200" font-size="13" fill="#d7e0ea">2026-11-16 09:31 UTC</text>
-  <text x="36" y="226" font-size="13" fill="#8a98a8">IP interrogées</text>
-  <text x="260" y="226" font-size="13" fill="#d7e0ea">10.20.1.15, 10.20.10.20, 10.20.18.8, 10.20.14.3, 203.0.113.50</text>
+  <!-- Left: Incident card -->
+  <rect x="20" y="190" width="440" height="330" rx="10" fill="#131a22" stroke="#243041"/>
+  <text x="36" y="214" font-size="13" font-weight="700" fill="#4cc3ff" letter-spacing="0.4">INCIDENT SUMMARY</text>
+  <g font-size="13">
+    <text x="36" y="244" fill="#8a98a8">Status</text><text x="170" y="244" fill="#d7e0ea">OPEN</text>
+    <text x="36" y="268" fill="#8a98a8">Assigned to</text><text x="170" y="268" fill="#d7e0ea">analyst.demo</text>
+    <text x="36" y="292" fill="#8a98a8">Events</text><text x="170" y="292" fill="#d7e0ea">500 retrieved / 4 683</text>
+    <text x="36" y="316" fill="#8a98a8">Flows</text><text x="170" y="316" fill="#d7e0ea">120 000 aggregated</text>
+    <text x="36" y="340" fill="#8a98a8">Related offences</text><text x="170" y="340" fill="#f97316">12 (10 closed, 2 open)</text>
+    <text x="36" y="364" fill="#8a98a8">Outbound volume</text><text x="170" y="364" fill="#ef4444">512.4 MB</text>
+  </g>
+  <line x1="36" y1="384" x2="444" y2="384" stroke="#243041"/>
+  <text x="36" y="408" font-size="12" font-weight="700" fill="#8a98a8">KEY EVIDENCE</text>
+  <text x="36" y="432" font-size="12" fill="#d7e0ea">• Horizontal sweep: 38 hosts, 6 ports</text>
+  <text x="36" y="454" font-size="12" fill="#d7e0ea">• 42 successful logins (svc_demo)</text>
+  <text x="36" y="476" font-size="12" fill="#d7e0ea">• Port 4444 (default Metasploit port)</text>
+  <text x="36" y="498" font-size="12" fill="#d7e0ea">• Base64 PowerShell: -nop -w hidden</text>
+  <text x="36" y="520" font-size="12" fill="#d7e0ea">• 512 MB sent to 203.0.113.50</text>
 
-  <!-- Strategy card -->
-  <rect x="20" y="270" width="1360" height="150" rx="10" fill="#131a22" stroke="#243041"/>
-  <text x="36" y="294" font-size="14" font-weight="700" fill="#4cc3ff">STRATÉGIE RETENUE</text>
-  <rect x="36" y="306" width="1328" height="28" fill="#1b2430"/>
-  <text x="50" y="325" font-size="12" font-weight="700" fill="#8a98a8">Source</text>
-  <text x="260" y="325" font-size="12" font-weight="700" fill="#8a98a8">Stratégie</text>
-  <text x="50" y="352" font-size="13" fill="#d7e0ea">events</text>
-  <text x="260" y="352" font-size="13" fill="#d7e0ea">INOFFENSE + fenêtre</text>
-  <text x="50" y="378" font-size="13" fill="#d7e0ea">flows</text>
-  <text x="260" y="378" font-size="13" fill="#f97316">Aucune stratégie n'a retourné de données</text>
+  <!-- Right: Kill chain -->
+  <rect x="480" y="190" width="900" height="330" rx="10" fill="#131a22" stroke="#243041"/>
+  <text x="496" y="214" font-size="13" font-weight="700" fill="#4cc3ff" letter-spacing="0.4">CYBER KILL CHAIN MAPPING</text>
+  <!-- Stage chevrons: 7 stages, width 120 each -->
+  <g font-size="12" text-anchor="middle" font-weight="700">
+    <polygon points="496,240 586,240 606,272 586,304 496,304 516,272" fill="#7f1d1d"/>
+    <text x="551" y="277" fill="#ffffff">Recon</text>
+    <polygon points="592,240 682,240 702,272 682,304 592,304 612,272" fill="#7f1d1d"/>
+    <text x="647" y="277" fill="#ffffff">Weapon.</text>
+    <polygon points="688,240 778,240 798,272 778,304 688,304 708,272" fill="#334155"/>
+    <text x="743" y="277" fill="#8a98a8">Delivery</text>
+    <polygon points="784,240 874,240 894,272 874,304 784,304 804,272" fill="#334155"/>
+    <text x="839" y="277" fill="#8a98a8">Exploit.</text>
+    <polygon points="880,240 970,240 990,272 970,304 880,304 900,272" fill="#334155"/>
+    <text x="935" y="277" fill="#8a98a8">Install</text>
+    <polygon points="976,240 1066,240 1086,272 1066,304 976,304 996,272" fill="#7f1d1d"/>
+    <text x="1031" y="277" fill="#ffffff">C2</text>
+    <polygon points="1072,240 1162,240 1182,272 1162,304 1072,304 1092,272" fill="#334155"/>
+    <text x="1127" y="277" fill="#8a98a8">Actions</text>
+  </g>
+  <text x="496" y="330" font-size="12" fill="#8a98a8">Active stages: Reconnaissance, Command &amp; Control (2 of 7)</text>
+  <line x1="496" y1="346" x2="1364" y2="346" stroke="#243041"/>
+  <text x="496" y="368" font-size="12" font-weight="700" fill="#8a98a8">STAGE</text>
+  <text x="640" y="368" font-size="12" font-weight="700" fill="#8a98a8">STATUS</text>
+  <text x="790" y="368" font-size="12" font-weight="700" fill="#8a98a8">EVIDENCE</text>
+  <g font-size="12" fill="#d7e0ea">
+    <text x="496" y="392">Reconnaissance</text><text x="640" y="392" fill="#ef4444" font-weight="700">ACTIVE</text><text x="790" y="392">Horizontal sweep from 10.20.1.15, TCP 445 / 22</text>
+    <text x="496" y="414">Command &amp; Control</text><text x="640" y="414" fill="#ef4444" font-weight="700">ACTIVE</text><text x="790" y="414">Traffic on port 4444 and reverse-shell pattern</text>
+    <text x="496" y="436">Exploitation</text><text x="640" y="436" fill="#8a98a8">Not detected</text><text x="790" y="436" fill="#8a98a8">No CVE reference in payloads</text>
+    <text x="496" y="458">Actions on Target</text><text x="640" y="458" fill="#f97316" font-weight="700">SUSPECTED</text><text x="790" y="458">Large outbound transfer to external host</text>
+    <text x="496" y="480">Installation</text><text x="640" y="480" fill="#8a98a8">Not detected</text><text x="790" y="480" fill="#8a98a8">No registry or scheduled-task indicator</text>
+  </g>
 
-  <!-- Query log card -->
-  <rect x="20" y="440" width="1360" height="230" rx="10" fill="#131a22" stroke="#243041"/>
-  <text x="36" y="464" font-size="14" font-weight="700" fill="#4cc3ff">JOURNAL DES REQUÊTES</text>
-  <rect x="36" y="476" width="1328" height="28" fill="#1b2430"/>
-  <text x="50" y="495" font-size="12" font-weight="700" fill="#8a98a8">Source</text>
-  <text x="200" y="495" font-size="12" font-weight="700" fill="#8a98a8">Stratégie</text>
-  <text x="620" y="495" font-size="12" font-weight="700" fill="#8a98a8">Statut</text>
-  <text x="780" y="495" font-size="12" font-weight="700" fill="#8a98a8">Résultat</text>
+  <!-- MITRE table -->
+  <rect x="20" y="540" width="1360" height="300" rx="10" fill="#131a22" stroke="#243041"/>
+  <text x="36" y="564" font-size="13" font-weight="700" fill="#4cc3ff" letter-spacing="0.4">MITRE ATT&amp;CK MAPPING (3 TECHNIQUES)</text>
+  <rect x="36" y="576" width="1328" height="28" fill="#1b2430"/>
+  <g font-size="12" font-weight="700" fill="#8a98a8">
+    <text x="50" y="595">Technique ID</text>
+    <text x="180" y="595">Name</text>
+    <text x="520" y="595">Tactic</text>
+    <text x="720" y="595">Evidence in this offence</text>
+    <text x="1200" y="595">Confidence</text>
+  </g>
+  <g font-size="13" fill="#d7e0ea">
+    <text x="50" y="624" fill="#4cc3ff">T1046</text>
+    <text x="180" y="624">Network Service Discovery</text>
+    <text x="520" y="624">Discovery</text>
+    <text x="720" y="624">Sweep of 38 hosts on TCP 445 and 22</text>
+    <text x="1200" y="624" fill="#f97316" font-weight="700">High</text>
+  </g>
+  <line x1="36" y1="640" x2="1364" y2="640" stroke="#1b2430"/>
+  <g font-size="13" fill="#d7e0ea">
+    <text x="50" y="664" fill="#4cc3ff">T1021.001</text>
+    <text x="180" y="664">Remote Desktop Protocol</text>
+    <text x="520" y="664">Lateral Movement</text>
+    <text x="720" y="664">Connections to database and proxy hosts</text>
+    <text x="1200" y="664" fill="#eab308" font-weight="700">Medium</text>
+  </g>
+  <line x1="36" y1="680" x2="1364" y2="680" stroke="#1b2430"/>
+  <g font-size="13" fill="#d7e0ea">
+    <text x="50" y="704" fill="#4cc3ff">T1059.001</text>
+    <text x="180" y="704">PowerShell</text>
+    <text x="520" y="704">Execution</text>
+    <text x="720" y="704">Base64 payload containing -nop -w hidden</text>
+    <text x="1200" y="704" fill="#ef4444" font-weight="700">High</text>
+  </g>
 
-  <text x="50" y="522" font-size="13" fill="#d7e0ea">events</text>
-  <text x="200" y="522" font-size="13" fill="#d7e0ea">INOFFENSE + fenêtre</text>
-  <text x="620" y="522" font-size="13" font-weight="700" fill="#22c55e">OK</text>
-  <text x="780" y="522" font-size="13" fill="#d7e0ea">500 ligne(s)</text>
+  <!-- Recommended actions strip -->
+  <rect x="36" y="730" width="1328" height="96" rx="8" fill="#0f151d" stroke="#243041"/>
+  <text x="52" y="754" font-size="12" font-weight="700" fill="#4cc3ff">RECOMMENDED ACTIONS</text>
+  <text x="52" y="776" font-size="12" fill="#d7e0ea">1. Confirm with the owner of 10.20.1.15 whether it is an authorised scanner.</text>
+  <text x="52" y="796" font-size="12" fill="#d7e0ea">2. Review the 42 successful logins for svc_demo and validate the source.</text>
+  <text x="52" y="816" font-size="12" fill="#d7e0ea">3. Check the destination 203.0.113.50 and block it if the transfer is unauthorised.</text>
 
-  <text x="50" y="552" font-size="13" fill="#d7e0ea">flows</text>
-  <text x="200" y="552" font-size="13" fill="#d7e0ea">INOFFENSE agrégé</text>
-  <text x="620" y="552" font-size="13" font-weight="700" fill="#ef4444">ÉCHEC</text>
-  <text x="780" y="552" font-size="13" fill="#8a98a8">Demo error: aggregation not supported on this version</text>
-
-  <text x="36" y="610" font-size="12" fill="#8a98a8">Si les événements ne sont pas récupérés alors que QRadar les affiche,</text>
-  <text x="36" y="628" font-size="12" fill="#8a98a8">transmettez ce journal pour correction de la requête AQL.</text>
+  <!-- Footer -->
+  <text x="700" y="962" font-size="11" fill="#8a98a8" text-anchor="middle">All values are fictitious demo data · 10.20.x.x and 203.0.113.0/24 are reserved for documentation</text>
 </svg>
