@@ -1,8 +1,9 @@
-# Console SOC d'analyse d'offences QRadar
+# ShadowTrace: QRadar Offence Investigation Console
 
-Application web qui analyse une offence QRadar et présente, dans une console par onglets :
-décision indicative (P2 à P5) avec signaux explicables, acteurs et zones réseau, événements,
-flux, IOC, MITRE ATT&CK, cyber kill chain, offences liées, réputation IP et qualité des données.
+A web console that analyses a QRadar offence and presents the results in tabbed views:
+an indicative decision (P2 to P5) with explainable signals, actors and network zones,
+events, flows, IOCs, MITRE ATT&CK, Cyber Kill Chain, related offences, IP reputation,
+and data quality.
 
 ## Installation
 
@@ -10,28 +11,28 @@ flux, IOC, MITRE ATT&CK, cyber kill chain, offences liées, réputation IP et qu
 python3.11 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env      # puis renseigner les valeurs
+cp .env.example .env      # then fill in the values
 chmod 600 .env
 python app.py
 ```
 
-Ouvrir `http://<IP_du_serveur>:5000` (ou le port défini par `APP_PORT`).
+Open `http://<server_IP>:5000` (or the port defined by `APP_PORT`).
 
 ## Configuration
 
-Toutes les valeurs sensibles sont lues depuis `.env`. Voir `.env.example`.
-Le token QRadar doit appartenir à un compte en lecture seule.
+All sensitive values are read from `.env`. See `.env.example`.
+The QRadar token should belong to a read-only account.
 
-## Sécurité
+## Security
 
-- Aucune authentification intégrée : placer l'application derrière un reverse proxy avec SSO,
-  ou restreindre l'accès par pare-feu à quelques postes.
-- Les IP internes ne sont jamais envoyées aux services de réputation externes.
-- Ne jamais versionner `.env`.
-- Le serveur Flask est un serveur de développement. En production, utiliser gunicorn :
+- No built-in authentication. Place the application behind a reverse proxy with SSO,
+  or restrict access by firewall to a few workstations.
+- Internal IP addresses are never sent to external reputation services.
+- Never commit `.env` to version control.
+- The Flask server is a development server. In production, use gunicorn:
   `gunicorn -w 2 -b 0.0.0.0:5000 app:app`.
 
-## Avertissement
+## Disclaimer
 
-Les décisions affichées sont indicatives. Elles doivent être validées par un analyste,
-et la justification doit être documentée dans l'offence.
+The decisions shown are indicative. They must be validated by an analyst,
+and the justification must be documented in the offence.
