@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="760" viewBox="0 0 1400 760" font-family="Segoe UI, Roboto, Arial, sans-serif">
+  <!-- Background -->
+  <rect width="1400" height="760" fill="#0b0f14"/>
+
+  <!-- Header -->
+  <rect x="0" y="0" width="1400" height="60" fill="#0f151d"/>
+  <line x1="0" y1="60" x2="1400" y2="60" stroke="#243041"/>
+  <text x="20" y="37" font-size="16" font-weight="700" fill="#4cc3ff">CONSOLE SOC · QRadar <tspan fill="#eab308">[DEMO DATA]</tspan></text>
+  <rect x="470" y="14" width="150" height="32" rx="6" fill="#0b0f14" stroke="#243041"/>
+  <text x="482" y="35" font-size="14" fill="#d7e0ea">900001</text>
+  <rect x="632" y="14" width="100" height="32" rx="6" fill="#1f6feb"/>
+  <text x="682" y="35" font-size="14" fill="#ffffff" text-anchor="middle">Analyser</text>
+  <text x="752" y="35" font-size="13" fill="#8a98a8">Analyse terminée en 2 s.</text>
+
+  <!-- Tabs -->
+  <rect x="20" y="72" width="90" height="30" rx="6" fill="#131a22" stroke="#243041"/>
+  <text x="65" y="92" font-size="13" fill="#8a98a8" text-anchor="middle">Synthèse</text>
+  <rect x="118" y="72" width="80" height="30" rx="6" fill="#131a22" stroke="#243041"/>
+  <text x="158" y="92" font-size="13" fill="#8a98a8" text-anchor="middle">Acteurs</text>
+  <rect x="206" y="72" width="100" height="30" rx="6" fill="#131a22" stroke="#243041"/>
+  <text x="256" y="92" font-size="13" fill="#8a98a8" text-anchor="middle">Événements</text>
+  <rect x="314" y="72" width="70" height="30" rx="6" fill="#131a22" stroke="#243041"/>
+  <text x="349" y="92" font-size="13" fill="#8a98a8" text-anchor="middle">Flux</text>
+  <rect x="392" y="72" width="120" height="30" rx="6" fill="#131a22" stroke="#243041"/>
+  <text x="452" y="92" font-size="13" fill="#8a98a8" text-anchor="middle">Payloads &amp; IOC</text>
+  <rect x="520" y="72" width="140" height="30" rx="6" fill="#131a22" stroke="#243041"/>
+  <text x="590" y="92" font-size="13" fill="#8a98a8" text-anchor="middle">MITRE &amp; Kill chain</text>
+  <rect x="668" y="72" width="120" height="30" rx="6" fill="#131a22" stroke="#243041"/>
+  <text x="728" y="92" font-size="13" fill="#8a98a8" text-anchor="middle">Offences liées</text>
+  <rect x="796" y="72" width="120" height="30" rx="6" fill="#131a22" stroke="#243041"/>
+  <text x="856" y="92" font-size="13" fill="#8a98a8" text-anchor="middle">Règles &amp; notes</text>
+  <rect x="924" y="72" width="110" height="30" rx="6" fill="#131a22" stroke="#243041"/>
+  <text x="979" y="92" font-size="13" fill="#8a98a8" text-anchor="middle">Réputation IP</text>
+  <rect x="1042" y="72" width="150" height="30" rx="6" fill="#15263a" stroke="#4cc3ff"/>
+  <text x="1117" y="92" font-size="13" fill="#ffffff" text-anchor="middle">Qualité des données</text>
+
+  <!-- Window and IP card -->
+  <rect x="20" y="120" width="1360" height="130" rx="10" fill="#131a22" stroke="#243041"/>
+  <text x="36" y="144" font-size="14" font-weight="700" fill="#4cc3ff">FENÊTRE ET IP</text>
+  <text x="36" y="174" font-size="13" fill="#8a98a8">Début</text>
+  <text x="260" y="174" font-size="13" fill="#d7e0ea">2026-11-15 08:00 UTC</text>
+  <text x="36" y="200" font-size="13" fill="#8a98a8">Fin</text>
+  <text x="260" y="200" font-size="13" fill="#d7e0ea">2026-11-16 09:31 UTC</text>
+  <text x="36" y="226" font-size="13" fill="#8a98a8">IP interrogées</text>
+  <text x="260" y="226" font-size="13" fill="#d7e0ea">10.20.1.15, 10.20.10.20, 10.20.18.8, 10.20.14.3, 203.0.113.50</text>
+
+  <!-- Strategy card -->
+  <rect x="20" y="270" width="1360" height="150" rx="10" fill="#131a22" stroke="#243041"/>
+  <text x="36" y="294" font-size="14" font-weight="700" fill="#4cc3ff">STRATÉGIE RETENUE</text>
+  <rect x="36" y="306" width="1328" height="28" fill="#1b2430"/>
+  <text x="50" y="325" font-size="12" font-weight="700" fill="#8a98a8">Source</text>
+  <text x="260" y="325" font-size="12" font-weight="700" fill="#8a98a8">Stratégie</text>
+  <text x="50" y="352" font-size="13" fill="#d7e0ea">events</text>
+  <text x="260" y="352" font-size="13" fill="#d7e0ea">INOFFENSE + fenêtre</text>
+  <text x="50" y="378" font-size="13" fill="#d7e0ea">flows</text>
+  <text x="260" y="378" font-size="13" fill="#f97316">Aucune stratégie n'a retourné de données</text>
+
+  <!-- Query log card -->
+  <rect x="20" y="440" width="1360" height="230" rx="10" fill="#131a22" stroke="#243041"/>
+  <text x="36" y="464" font-size="14" font-weight="700" fill="#4cc3ff">JOURNAL DES REQUÊTES</text>
+  <rect x="36" y="476" width="1328" height="28" fill="#1b2430"/>
+  <text x="50" y="495" font-size="12" font-weight="700" fill="#8a98a8">Source</text>
+  <text x="200" y="495" font-size="12" font-weight="700" fill="#8a98a8">Stratégie</text>
+  <text x="620" y="495" font-size="12" font-weight="700" fill="#8a98a8">Statut</text>
+  <text x="780" y="495" font-size="12" font-weight="700" fill="#8a98a8">Résultat</text>
+
+  <text x="50" y="522" font-size="13" fill="#d7e0ea">events</text>
+  <text x="200" y="522" font-size="13" fill="#d7e0ea">INOFFENSE + fenêtre</text>
+  <text x="620" y="522" font-size="13" font-weight="700" fill="#22c55e">OK</text>
+  <text x="780" y="522" font-size="13" fill="#d7e0ea">500 ligne(s)</text>
+
+  <text x="50" y="552" font-size="13" fill="#d7e0ea">flows</text>
+  <text x="200" y="552" font-size="13" fill="#d7e0ea">INOFFENSE agrégé</text>
+  <text x="620" y="552" font-size="13" font-weight="700" fill="#ef4444">ÉCHEC</text>
+  <text x="780" y="552" font-size="13" fill="#8a98a8">Demo error: aggregation not supported on this version</text>
+
+  <text x="36" y="610" font-size="12" fill="#8a98a8">Si les événements ne sont pas récupérés alors que QRadar les affiche,</text>
+  <text x="36" y="628" font-size="12" fill="#8a98a8">transmettez ce journal pour correction de la requête AQL.</text>
+</svg>
