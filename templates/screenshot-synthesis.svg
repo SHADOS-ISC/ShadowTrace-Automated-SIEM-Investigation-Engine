@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900" font-family="Segoe UI, Roboto, Arial, sans-serif">
+  <!-- Background -->
+  <rect width="1400" height="900" fill="#0b0f14"/>
+
+  <!-- Header -->
+  <rect x="0" y="0" width="1400" height="60" fill="#0f151d"/>
+  <line x1="0" y1="60" x2="1400" y2="60" stroke="#243041"/>
+  <text x="20" y="37" font-size="16" font-weight="700" fill="#4cc3ff">CONSOLE SOC · QRadar <tspan fill="#eab308">[DEMO DATA]</tspan></text>
+  <rect x="470" y="14" width="150" height="32" rx="6" fill="#0b0f14" stroke="#243041"/>
+  <text x="482" y="35" font-size="14" fill="#d7e0ea">900001</text>
+  <rect x="632" y="14" width="100" height="32" rx="6" fill="#1f6feb"/>
+  <text x="682" y="35" font-size="14" fill="#ffffff" text-anchor="middle">Analyser</text>
+  <text x="752" y="35" font-size="13" fill="#8a98a8">Analyse terminée en 2 s.</text>
+
+  <!-- Tabs -->
+  <rect x="20" y="72" width="90" height="30" rx="6" fill="#15263a" stroke="#4cc3ff"/>
+  <text x="65" y="92" font-size="13" fill="#ffffff" text-anchor="middle">Synthèse</text>
+  <rect x="118" y="72" width="80" height="30" rx="6" fill="#131a22" stroke="#243041"/>
+  <text x="158" y="92" font-size="13" fill="#8a98a8" text-anchor="middle">Acteurs</text>
+  <rect x="206" y="72" width="100" height="30" rx="6" fill="#131a22" stroke="#243041"/>
+  <text x="256" y="92" font-size="13" fill="#8a98a8" text-anchor="middle">Événements</text>
+  <rect x="314" y="72" width="70" height="30" rx="6" fill="#131a22" stroke="#243041"/>
+  <text x="349" y="92" font-size="13" fill="#8a98a8" text-anchor="middle">Flux</text>
+  <rect x="392" y="72" width="120" height="30" rx="6" fill="#131a22" stroke="#243041"/>
+  <text x="452" y="92" font-size="13" fill="#8a98a8" text-anchor="middle">Payloads &amp; IOC</text>
+  <rect x="520" y="72" width="140" height="30" rx="6" fill="#131a22" stroke="#243041"/>
+  <text x="590" y="92" font-size="13" fill="#8a98a8" text-anchor="middle">MITRE &amp; Kill chain</text>
+  <rect x="668" y="72" width="120" height="30" rx="6" fill="#131a22" stroke="#243041"/>
+  <text x="728" y="92" font-size="13" fill="#8a98a8" text-anchor="middle">Offences liées</text>
+  <rect x="796" y="72" width="120" height="30" rx="6" fill="#131a22" stroke="#243041"/>
+  <text x="856" y="92" font-size="13" fill="#8a98a8" text-anchor="middle">Règles &amp; notes</text>
+  <rect x="924" y="72" width="110" height="30" rx="6" fill="#131a22" stroke="#243041"/>
+  <text x="979" y="92" font-size="13" fill="#8a98a8" text-anchor="middle">Réputation IP</text>
+  <rect x="1042" y="72" width="150" height="30" rx="6" fill="#131a22" stroke="#243041"/>
+  <text x="1117" y="92" font-size="13" fill="#8a98a8" text-anchor="middle">Qualité des données</text>
+
+  <!-- Decision banner -->
+  <rect x="20" y="120" width="1360" height="100" rx="10" fill="#131a22" stroke="#243041"/>
+  <rect x="20" y="120" width="8" height="100" rx="4" fill="#f97316"/>
+  <text x="50" y="186" font-size="34" font-weight="800" fill="#f97316">P3</text>
+  <text x="130" y="158" font-size="18" font-weight="700" fill="#d7e0ea">INVESTIGATION : priorité moyenne (≤ 4 h)</text>
+  <text x="130" y="182" font-size="13" fill="#8a98a8">Confiance : Moyenne · Événements et flux partiellement récupérés.</text>
+  <text x="130" y="202" font-size="13" fill="#8a98a8">Score indicatif : 6.1/10 · MEDIUM: investigate within 4 hours</text>
+
+  <!-- KPIs -->
+  <g font-size="22" font-weight="700" fill="#d7e0ea" text-anchor="middle">
+    <text x="100.5" y="274">6</text>
+    <text x="271.75" y="274">5</text>
+    <text x="443" y="274">6</text>
+    <text x="614.25" y="274">7</text>
+    <text x="785.5" y="274">500 / 4683</text>
+    <text x="956.75" y="274">120 000</text>
+    <text x="1128" y="274">4</text>
+    <text x="1299.25" y="274" fill="#f97316">12</text>
+  </g>
+  <g font-size="11" fill="#8a98a8" text-anchor="middle">
+    <text x="100.5" y="294">Magnitude /10</text>
+    <text x="271.75" y="294">Sévérité /10</text>
+    <text x="443" y="294">Crédibilité /10</text>
+    <text x="614.25" y="294">Pertinence /10</text>
+    <text x="785.5" y="294">Événements récupérés</text>
+    <text x="956.75" y="294">Flux (agrégats)</text>
+    <text x="1128" y="294">Hôtes destination</text>
+    <text x="1299.25" y="294">Offences liées</text>
+  </g>
+  <g>
+    <rect x="20" y="250" width="161" height="60" rx="10" fill="#131a22" stroke="#243041"/>
+    <rect x="191" y="250" width="161" height="60" rx="10" fill="#131a22" stroke="#243041"/>
+    <rect x="362" y="250" width="161" height="60" rx="10" fill="#131a22" stroke="#243041"/>
+    <rect x="533" y="250" width="161" height="60" rx="10" fill="#131a22" stroke="#243041"/>
+    <rect x="704" y="250" width="161" height="60" rx="10" fill="#131a22" stroke="#243041"/>
+    <rect x="875" y="250" width="161" height="60" rx="10" fill="#131a22" stroke="#243041"/>
+    <rect x="1046" y="250" width="161" height="60" rx="10" fill="#131a22" stroke="#243041"/>
+    <rect x="1217" y="250" width="161" height="60" rx="10" fill="#131a22" stroke="#243041"/>
+  </g>
+
+  <!-- Signals card -->
+  <rect x="20" y="330" width="680" height="330" rx="10" fill="#131a22" stroke="#243041"/>
+  <text x="36" y="354" font-size="14" font-weight="700" fill="#4cc3ff">SIGNAUX DÉTECTÉS (4)</text>
+
+  <rect x="36" y="368" width="648" height="62" rx="6" fill="#0f151d"/>
+  <rect x="36" y="368" width="4" height="62" fill="#f97316"/>
+  <text x="50" y="388" font-size="13" font-weight="700" fill="#d7e0ea">ATTENTION · Horizontal sweep</text>
+  <text x="50" y="408" font-size="12" fill="#d7e0ea">Constat : Source 10.20.1.15: 38 destination hosts, 6 ports</text>
+  <text x="50" y="424" font-size="11" fill="#8a98a8">Pourquoi : host probing many targets, scanner or discovery phase</text>
+
+  <rect x="36" y="440" width="648" height="62" rx="6" fill="#0f151d"/>
+  <rect x="36" y="440" width="4" height="62" fill="#f97316"/>
+  <text x="50" y="460" font-size="13" font-weight="700" fill="#d7e0ea">ATTENTION · Successful logins observed</text>
+  <text x="50" y="480" font-size="12" fill="#d7e0ea">Constat : 42 successful login(s). Accounts: svc_demo</text>
+  <text x="50" y="496" font-size="11" fill="#8a98a8">Pourquoi : authentication after probing, validate account and source</text>
+
+  <rect x="36" y="512" width="648" height="62" rx="6" fill="#0f151d"/>
+  <rect x="36" y="512" width="4" height="62" fill="#f97316"/>
+  <text x="50" y="532" font-size="13" font-weight="700" fill="#d7e0ea">ATTENTION · Ports associated with attack tools</text>
+  <text x="50" y="552" font-size="12" fill="#d7e0ea">Constat : Observed ports: 4444</text>
+  <text x="50" y="568" font-size="11" fill="#8a98a8">Pourquoi : frequently used by post-exploitation tools or C2</text>
+
+  <rect x="36" y="584" width="648" height="62" rx="6" fill="#0f151d"/>
+  <rect x="36" y="584" width="4" height="62" fill="#ef4444"/>
+  <text x="50" y="604" font-size="13" font-weight="700" fill="#d7e0ea">CRITIQUE · Large outbound transfer</text>
+  <text x="50" y="624" font-size="12" fill="#d7e0ea">Constat : 512.4 MB sent</text>
+  <text x="50" y="640" font-size="11" fill="#8a98a8">Pourquoi : possible exfiltration, check the destination</text>
+
+  <!-- Questions card -->
+  <rect x="720" y="330" width="660" height="160" rx="10" fill="#131a22" stroke="#243041"/>
+  <text x="736" y="354" font-size="14" font-weight="700" fill="#4cc3ff">QUESTIONS À TRANCHER</text>
+  <text x="736" y="384" font-size="12" fill="#d7e0ea">• Is 10.20.1.15 an authorised scanner? Confirm with the asset owner.</text>
+  <text x="736" y="408" font-size="12" fill="#d7e0ea">• Which accounts logged in successfully, and at what time?</text>
+  <text x="736" y="432" font-size="12" fill="#d7e0ea">• Why does this host reach database and proxy servers?</text>
+
+  <!-- Actions card -->
+  <rect x="720" y="500" width="660" height="160" rx="10" fill="#131a22" stroke="#243041"/>
+  <text x="736" y="524" font-size="14" font-weight="700" fill="#4cc3ff">ACTIONS RECOMMANDÉES</text>
+  <text x="736" y="554" font-size="12" fill="#d7e0ea">• Obtain confirmation from the source asset owner within 4 hours.</text>
+  <text x="736" y="578" font-size="12" fill="#d7e0ea">• Check successful logins and the accounts used.</text>
+  <text x="736" y="602" font-size="12" fill="#d7e0ea">• Document the decision in the offence notes.</text>
+
+  <!-- Context card -->
+  <rect x="20" y="680" width="1360" height="190" rx="10" fill="#131a22" stroke="#243041"/>
+  <text x="36" y="704" font-size="14" font-weight="700" fill="#4cc3ff">CONTEXTE DE L'OFFENCE</text>
+  <text x="36" y="734" font-size="13" fill="#8a98a8">Description</text>
+  <text x="260" y="734" font-size="13" fill="#d7e0ea">DEMO: Internal host sweeping multiple servers</text>
+  <text x="36" y="760" font-size="13" fill="#8a98a8">Statut</text>
+  <text x="260" y="760" font-size="13" fill="#d7e0ea">OPEN</text>
+  <text x="36" y="786" font-size="13" fill="#8a98a8">Assignée à</text>
+  <text x="260" y="786" font-size="13" fill="#d7e0ea">analyst.demo</text>
+  <text x="36" y="812" font-size="13" fill="#8a98a8">Sévérité QRadar</text>
+  <text x="260" y="812" font-size="13" fill="#d7e0ea">MEDIUM · Moderate risk, monitor closely</text>
+</svg>
