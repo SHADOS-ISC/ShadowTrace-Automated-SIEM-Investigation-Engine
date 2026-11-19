@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Console SOC · Analyse d'offence</title>
+<style>
+:root { --bg:#0b0f14; --panel:#131a22; --line:#243041; --txt:#d7e0ea; --mute:#8a98a8;
+        --acc:#4cc3ff; --red:#ef4444; --org:#f97316; --yel:#eab308; --grn:#22c55e; }
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--txt); font:14px/1.45 "Segoe UI", Roboto, Arial, sans-serif; }
+header { display:flex; align-items:center; gap:14px; flex-wrap:wrap; padding:12px 20px;
+         background:#0f151d; border-bottom:1px solid var(--line); position:sticky; top:0; z-index:5; }
+header h1 { font-size:16px; margin:0; color:var(--acc); letter-spacing:.5px; }
+input { background:var(--bg); color:var(--txt); border:1px solid var(--line); padding:8px 10px;
+        border-radius:6px; width:170px; font-size:14px; }
+button { background:#1f6feb; color:#fff; border:0; padding:8px 14px; border-radius:6px; cursor:pointer; font-size:14px; }
+button.sec { background:#1b2430; border:1px solid var(--line); }
+button:disabled { opacity:.45; cursor:not-allowed; }
+#status { color:var(--mute); }
+.err { color:var(--red) !important; }
+#ctx { margin-left:auto; color:var(--mute); font-size:13px; }
+main { padding:20px; max-width:1400px; margin:auto; }
+.banner { display:flex; gap:18px; align-items:center; border:1px solid var(--line); border-left:8px solid var(--c);
+          background:var(--panel); border-radius:10px; padding:18px; margin-bottom:16px; }
+.pcode { font-size:34px; font-weight:800; color:var(--c); min-width:70px; }
+.plabel { font-size:18px; font-weight:700; }
+.muted { color:var(--mute); }
+.kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:10px; margin-bottom:16px; }
+.kpi { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:12px; text-align:center; }
+.kv { font-size:22px; font-weight:700; }
+.kl { font-size:12px; color:var(--mute); margin-top:2px; }
+.tabs { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px; }
+.tab { background:var(--panel); color:var(--mute); border:1px solid var(--line); }
+.tab.on { color:#fff; border-color:var(--acc); background:#15263a; }
+.grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.card { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:16px; margin-bottom:16px; min-width:0; }
+.card h2 { font-size:14px; color:var(--acc); margin:0 0 12px; text-transform:uppercase; letter-spacing:.4px; }
+.summary { font-size:15px; line-height:1.6; }
+table { width:100%; border-collapse:collapse; font-size:13px; }
+th { text-align:left; background:#0f151d; color:var(--mute); padding:7px; font-weight:600; }
+td { padding:6px 7px; border-bottom:1px solid #1b2430; vertical-align:top; word-break:break-word; }
+ul { margin:0; padding-left:20px; } li { margin:6px 0; }
+.sig { border-left:4px solid var(--c, var(--mute)); background:#0f151d; padding:10px 12px; border-radius:6px; margin-bottom:10px; }
+.sig.high { --c:var(--red); } .sig.warn { --c:var(--org); } .sig.info { --c:var(--acc); }
+.sig .st { font-weight:700; margin-bottom:4px; }
+.flag { font-weight:700; color:var(--red); }
+.ok { color:var(--grn); }
+pre { white-space:pre-wrap; word-break:break-word; background:#0f151d; padding:8px; border-radius:6px; color:var(--mute); font-size:12px; margin:0; }
+a { color:var(--acc); }
+@media (max-width:900px) { .grid { grid-template-columns:1fr; } }
+@media print {
+  header button, header input, .tabs { display:none !important; }
+  body { background:#fff; color:#000; } .card, .banner, .kpi { border-color:#999; background:#fff; }
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>CONSOLE SOC · QRadar</h1>
+  <input id="oid" type="number" min="1" placeholder="ID offence">
+  <button id="go">Analyser</button>
+  <button id="export" class="sec" disabled>Exporter JSON</button>
+  <button id="print" class="sec" disabled>Imprimer</button>
+  <span id="status" class="muted">Saisissez un ID d'offence.</span>
+  <span id="ctx"></span>
+</header>
+<main>
+  <div class="tabs" id="tabs"></div>
+  <div id="view"><div class="card muted">Aucune analyse chargée.</div></div>
+</main>
+
+<script>
+const $ = s => document.querySelector(s);
+const PRI = { P2:"#ef4444", P3:"#f97316", P4:"#eab308", P5:"#22c55e" };
+const LVL = { high:"CRITIQUE", warn:"ATTENTION", info:"INFO" };
+const ORDER = { high:0, warn:1, info:2 };
+let R = null, active = "synthese";
+
+// Toutes les données QRadar passent par textContent : aucune injection HTML possible.
+function el(tag, text, cls) {
+  const e = document.createElement(tag);
+  if (text !== undefined && text !== null) e.textContent = String(text);
+  if (cls) e.className = cls;
+  return e;
+}
+const dash = v => (v === undefined || v === null || v === "") ? "—" : v;
+const flag = (text, cls) => el("span", text, "flag " + (cls || ""));
+function wrap(...kids) { const d = el("div"); kids.forEach(k => d.appendChild(k)); return d; }
+function grid(...kids) { const g = el("div", "", "grid"); kids.forEach(k => g.appendChild(k)); return g; }
+function card(title, ...kids) {
+  const s = el("section", "", "card");
+  s.appendChild(el("h2", title));
+  kids.forEach(k => { if (k) s.appendChild(k); });
+  return s;
+}
+function tbl(headers, rows) {
+  const t = el("table"), h = el("tr");
+  headers.forEach(x => h.appendChild(el("th", x)));
+  t.appendChild(h);
+  if (!rows.length) {
+    const tr = el("tr"), td = el("td", "Aucune donnée");
+    td.colSpan = headers.length; tr.appendChild(td); t.appendChild(tr);
+  }
+  rows.forEach(r => {
+    const tr = el("tr");
+    r.forEach(c => {
+      const td = el("td");
+      if (c instanceof Node) td.appendChild(c); else td.textContent = dash(c);
+      tr.appendChild(td);
+    });
+    t.appendChild(tr);
+  });
+  return t;
+}
+function kvTable(obj) {
+  const t = el("table");
+  Object.entries(obj).forEach(([k, v]) => {
+    const tr = el("tr");
+    tr.appendChild(el("th", k));
+    tr.appendChild(el("td", Array.isArray(v) ? (v.join(", ") || "—") : dash(v)));
+    t.appendChild(tr);
+  });
+  return t;
+}
+function ul(items) {
+  const u = el("ul");
+  (items && items.length ? items : ["—"]).forEach(i => u.appendChild(el("li", i)));
+  return u;
+}
+function kpi(label, value, color) {
+  const d = el("div", "", "kpi"), v = el("div", dash(value), "kv");
+  if (color) v.style.color = color;
+  d.appendChild(v); d.appendChild(el("div", label, "kl"));
+  return d;
+}
+function sigCard(s) {
+  const d = el("div", "", "sig " + s.level);
+  d.appendChild(el("div", LVL[s.level] + " · " + s.title, "st"));
+  d.appendChild(el("div", "Constat : " + s.evidence));
+  d.appendChild(el("div", "Pourquoi : " + s.why, "muted"));
+  return d;
+}
+const ACTOR_H = ["IP", "Portée", "Zone", "Nom d'hôte", "OS", "Propriétaire", "Localisation"];
+const actorRow = a => [a.ip,
+  (a.scope === "EXTERNE" || a.scope === "NON RÉSOLU") ? flag(a.scope) : a.scope,
+  a.zone, a.asset && a.asset.hostname, a.asset && a.asset.os,
+  a.asset && a.asset.owner, a.asset && a.asset.location];
+
+// ── Vues ─────────────────────────────────────────────────────────────────────
+function rSynthese(r) {
+  const d = r.decision, o = r.offence;
+  const ban = el("div", "", "banner");
+  ban.style.setProperty("--c", PRI[d.code] || "#8a98a8");
+  ban.appendChild(el("div", d.code, "pcode"));
+  const bt = el("div");
+  bt.appendChild(el("div", d.label, "plabel"));
+  bt.appendChild(el("div", "Confiance : " + d.confidence + " · " + d.confidence_reason, "muted"));
+  bt.appendChild(el("div", "Score indicatif : " + d.score + "/10 · " + d.heuristic_verdict, "muted"));
+  ban.appendChild(bt);
+
+  const kp = el("div", "", "kpis");
+  kp.appendChild(kpi("Magnitude /10", o.magnitude));
+  kp.appendChild(kpi("Sévérité /10", o.severity));
+  kp.appendChild(kpi("Crédibilité /10", o.credibility));
+  kp.appendChild(kpi("Pertinence /10", o.relevance));
+  kp.appendChild(kpi("Événements récupérés", r.events.total + " / " + o.event_count));
+  kp.appendChild(kpi("Flux (agrégats)", r.flows.retrieved ? r.flows.flows : 0));
+  kp.appendChild(kpi("Hôtes destination", r.actors.destinations.length));
+  kp.appendChild(kpi("Offences liées", r.related.total, r.related.total >= 10 ? "#f97316" : null));
+
+  const sigs = [...r.signals].sort((a, b) => ORDER[a.level] - ORDER[b.level]);
+  const sw = el("div");
+  if (sigs.length) sigs.forEach(s => sw.appendChild(sigCard(s)));
+  else sw.appendChild(el("p", "Aucun signal particulier.", "muted"));
+
+  return wrap(ban, kp,
+    card("Résumé d'analyse", el("p", d.summary, "summary")),
+    grid(card("Signaux détectés (" + sigs.length + ")", sw),
+         wrap(card("Questions à trancher", ul(d.questions)),
+              card("Actions recommandées", ul(d.actions)))),
+    card("Contexte de l'offence", kvTable({
+      "Description": o.description, "Statut": o.status, "Assignée à": o.assigned_to,
+      "Début": o.start, "Dernière mise à jour": o.last_updated,
+      "Catégories": o.categories, "Sources de logs": o.log_source_count,
+      "Sévérité QRadar": o.severity_label + " · " + o.severity_desc
+    })));
+}
+
+function rActeurs(r) {
+  return wrap(
+    card("Sources (" + r.actors.sources.length + ")", tbl(ACTOR_H, r.actors.sources.map(actorRow))),
+    card("Destinations (" + r.actors.destinations.length + ")", tbl(ACTOR_H, r.actors.destinations.map(actorRow))),
+    card("Zones réseau touchées", ul(r.actors.zones)));
+}
+
+function rEvents(r) {
+  const ev = r.events;
+  if (!ev.retrieved) {
+    return card("Événements", el("p", "Aucun événement récupéré par l'API (" + ev.announced + " annoncés). Voir l'onglet Qualité des données.", "muted"));
+  }
+  const ports = ev.dst_ports.map(p => [p.value, p.count, p.service, p.suspicious ? flag("SUSPECT") : ""]);
+  const sweeps = ev.sweeps.map(s => [s.src, s.kind, s.detail, s.events]);
+  const logins = ev.logins.count
+    ? tbl(["Comptes", "Sources"], [[ev.logins.users.map(u => u.value + " (" + u.count + ")").join(", "),
+                                    ev.logins.sources.map(u => u.value).join(", ")]])
+    : el("p", "Aucune connexion réussie dans les événements.", "muted");
+  return wrap(
+    grid(card("Catégories", tbl(["Nb", "Catégorie"], ev.categories.map(x => [x.count, x.value]))),
+         card("Ports destination", tbl(["Port", "Nb", "Service", "Alerte"], ports))),
+    card("Balayages détectés", tbl(["Source", "Type", "Détail", "Événements"], sweeps)),
+    card("Connexions réussies", logins),
+    grid(card("Hôtes destination", tbl(["IP", "Nb"], ev.dst_hosts.map(x => [x.value, x.count]))),
+         card("Comptes et sources de logs",
+              tbl(["Compte", "Nb"], ev.users.map(x => [x.value, x.count])),
+              tbl(["Log source", "Nb"], ev.sources.map(x => [x.value, x.count])))),
+    card("Chronologie (100 premiers événements)",
+         tbl(["Heure", "Source", "Destination", "Port", "Événement", "Utilisateur"],
+             ev.timeline.map(t => [t.time, t.src, t.dst, t.port, t.event, t.user]))));
+}
+
+function rFlows(r) {
+  const f = r.flows;
+  if (!f.retrieved) return card("Flux réseau", el("p", "Aucun agrégat de flux récupéré. Voir l'onglet Qualité des données.", "muted"));
+  const warn = f.large ? el("p", "TRANSFERT SORTANT IMPORTANT (> 100 Mo) : exfiltration possible à vérifier.", "flag") : null;
+  return wrap(
+    grid(card("Volumes", kvTable({ "Flux": f.flows, "Envoyé (Mo)": f.sent_mb, "Reçu (Mo)": f.recv_mb }), warn),
+         card("Protocoles", tbl(["Protocole", "Flux"], f.protocols.map(p => [p.value, p.count])))),
+    card("Principaux flux (agrégés source / destination / port)",
+         tbl(["Source", "Destination", "Port", "Protocole", "Flux", "Envoyé (Mo)", "Reçu (Mo)"],
+             f.top.map(t => [t.src, t.dst, t.port, t.protocol, t.flows, t.sent_mb, t.recv_mb]))));
+}
+
+function rPayload(r) {
+  const p = r.payload, iocRows = [];
+  Object.entries(r.iocs).forEach(([cat, vals]) => vals.forEach(v => iocRows.push([cat, v])));
+  const b64 = p.base64.map((b, i) => [
+    "B64-" + (i + 1), b.suspicious ? flag("SUSPECT") : el("span", "bénin"), el("pre", b.decoded)]);
+  const ent = "Entropie de Shannon : " + p.entropy + (p.high_entropy ? " (ÉLEVÉE, chiffrement ou obfuscation possible)" : " (normale)");
+  return wrap(
+    card("Synthèse payload", el("p", p.chars + " caractères analysés · " + ent)),
+    card("Indicateurs (IOC)", tbl(["Type", "Valeur"], iocRows)),
+    card("Base64 décodé", tbl(["Id", "Verdict", "Contenu"], b64)),
+    card("Commandes suspectes", p.commands.length ? ul(p.commands) : el("p", "Aucune détectée.", "muted")),
+    card("Payloads significatifs", tbl(["Heure", "Source", "Destination", "Contenu"],
+         p.top.map(t => [t.time, t.src, t.dst, el("pre", t.text)]))));
+}
+
+function rMitre(r) {
+  const rows = r.mitre.map(m => {
+    const a = el("a", m.id); a.href = m.url; a.target = "_blank"; a.rel = "noopener";
+    return [a, m.name];
+  });
+  return wrap(
+    card("MITRE ATT&CK (" + r.mitre.length + ")", tbl(["Technique", "Nom"], rows)),
+    card("Cyber Kill Chain", tbl(["Étape", "Statut", "Mots-clés"],
+      r.killchain.map(k => [k.stage, k.active ? flag("ACTIVE") : "Non détectée", k.keywords.join(", ")]))));
+}
+
+function rRelated(r) {
+  const rel = r.related;
+  const summary = el("p", rel.total + " offence(s) liée(s) : " + rel.closed + " fermée(s), " + rel.open + " ouverte(s).",
+                     rel.total >= 10 ? "flag" : "muted");
+  return card("Offences liées", summary, tbl(
+    ["ID", "Magnitude", "Statut", "Événements", "Relation", "Description"],
+    rel.items.map(x => [x.id, x.magnitude, x.status, x.events, x.relation, x.description])));
+}
+
+function rRules(r) {
+  return wrap(
+    card("Règles déclenchées", tbl(["ID", "Nom", "Type", "Activée", "Propriétaire"],
+      r.rules.map(x => [x.id, x.name, x.type,
+        x.enabled === false ? flag("DÉSACTIVÉE") : (x.enabled ? "Oui" : "—"), x.owner]))),
+    card("Notes d'analyste", r.notes.length
+      ? tbl(["Heure", "Utilisateur", "Note"], r.notes.map(n => [n.time, n.user, n.text]))
+      : el("p", "Aucune note. Documentez la décision dans l'offence QRadar.", "muted")));
+}
+
+function ctiText(c) {
+  if (c.error) return "Erreur : " + c.error;
+  return Object.entries(c).filter(([k]) => k !== "source")
+    .map(([k, v]) => k + " : " + (v === null || v === undefined ? "—" : v)).join(" · ");
+}
+
+function rReputation(r) {
+  const rep = r.reputation || [];
+  if (!rep.length) return card("Réputation IP", el("p", "Aucune IP à vérifier.", "muted"));
+  return wrap(...rep.map(p => {
+    const q = p.qradar.offences, ev = p.qradar.events;
+    const cti = (p.cti && p.cti.results) || [];
+    const ctiPart = cti.length
+      ? tbl(["Source", "Résultat"], cti.map(c => [c.source, ctiText(c)]))
+      : el("p", (p.cti && p.cti.skipped) || "Pas de données CTI.", "muted");
+    return card("IP " + p.ip + " · " + p.scope,
+      grid(
+        kvTable({
+          ["Offences QRadar (" + q.days + " j)"]: q.total,
+          "Ouvertes / fermées": q.open + " / " + q.closed,
+          "Première vue": q.first, "Dernière vue": q.last,
+          "Rôles": q.roles
+        }),
+        kvTable({
+          ["Événements émis (" + ev.days + " j)"]: ev.events,
+          "Destinations distinctes": ev.destinations,
+          "Ports principaux": ev.ports,
+          "Erreur AQL": ev.error
+        })),
+      el("h3", "Réputation externe (CTI)"), ctiPart,
+      el("h3", "Dernières offences liées à cette IP"),
+      tbl(["ID", "Statut", "Début", "Description"],
+          q.examples.map(x => [x.id, x.status, x.start, x.description])));
+  }));
+}
+
+function rQuality(r) {
+  const q = r.quality;
+  const used = Object.entries(q.used).map(([k, v]) => [k, v || "Aucune stratégie n'a retourné de données"]);
+  return wrap(
+    card("Fenêtre et IP", kvTable({ "Début": q.window.start, "Fin": q.window.end, "IP interrogées": q.resolved_ips })),
+    card("Stratégie retenue", tbl(["Source", "Stratégie"], used)),
+    card("Journal des requêtes", tbl(["Source", "Stratégie", "Statut", "Résultat"],
+      q.log.map(l => [l.source, l.strategie,
+        l.ok ? el("span", "OK", "ok") : flag("ÉCHEC"),
+        l.ok ? l.lignes + " ligne(s)" : l.erreur]))),
+    el("p", "Si les événements ne sont pas récupérés alors que QRadar les affiche, transmettez ce journal pour correction de la requête AQL.", "muted"));
+}
+
+const TABS = [
+  ["synthese", "Synthèse", rSynthese],
+  ["acteurs", "Acteurs", rActeurs],
+  ["evenements", "Événements", rEvents],
+  ["flux", "Flux", rFlows],
+  ["payload", "Payloads & IOC", rPayload],
+  ["mitre", "MITRE & Kill chain", rMitre],
+  ["liees", "Offences liées", rRelated],
+  ["regles", "Règles & notes", rRules],
+  ["reputation", "Réputation IP", rReputation],
+  ["qualite", "Qualité des données", rQuality],
+];
+
+function buildTabs() {
+  const t = $("#tabs");
+  t.innerHTML = "";
+  TABS.forEach(([k, label]) => {
+    const b = el("button", label, "tab" + (k === active ? " on" : ""));
+    b.onclick = () => { active = k; buildTabs(); show(); };
+    t.appendChild(b);
+  });
+}
+
+function show() {
+  if (!R) return;
+  const entry = TABS.find(x => x[0] === active);
+  $("#view").replaceChildren(entry[2](R));
+}
+
+// ── Actions ──────────────────────────────────────────────────────────────────
+async function run() {
+  const id = $("#oid").value.trim();
+  const st = $("#status"), btn = $("#go");
+  if (!/^\d+$/.test(id)) { st.className = "err"; st.textContent = "ID numérique requis."; return; }
+  btn.disabled = true;
+  st.className = "muted";
+  const t0 = Date.now();
+  const tick = setInterval(() => {
+    st.textContent = "Collecte QRadar en cours… " + Math.round((Date.now() - t0) / 1000) + " s";
+  }, 1000);
+  try {
+    const res = await fetch("/api/offence/" + id);
+    const txt = await res.text();
+    let data;
+    try { data = JSON.parse(txt); }
+    catch (_) { throw new Error("réponse non JSON (HTTP " + res.status + ")"); }
+    if (!res.ok) throw new Error(data.error || ("HTTP " + res.status));
+    R = data;
+    active = "synthese";
+    $("#export").disabled = false;
+    $("#print").disabled = false;
+    $("#ctx").textContent = "Offence #" + R.offence.id + " · " + R.decision.code + " · " + R.generated;
+    buildTabs();
+    show();
+    st.textContent = "Analyse terminée en " + Math.round((Date.now() - t0) / 1000) + " s.";
+  } catch (e) {
+    st.className = "err";
+    st.textContent = "Erreur : " + e.message;
+  } finally {
+    clearInterval(tick);
+    btn.disabled = false;
+  }
+}
+
+$("#go").addEventListener("click", run);
+$("#oid").addEventListener("keydown", e => { if (e.key === "Enter") run(); });
+$("#print").addEventListener("click", () => window.print());
+$("#export").addEventListener("click", () => {
+  if (!R) return;
+  const blob = new Blob([JSON.stringify(R, null, 2)], { type: "application/json" });
+  const a = el("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "offence_" + R.offence.id + ".json";
+  a.click();
+});
+
+buildTabs();
+</script>
+</body>
+</html>
