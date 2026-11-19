@@ -1,4 +1,4 @@
-# ShadowTrace: QRadar Offence Investigation Console
+# ShadowTrace: SIEM Offence Investigation Console
 
 A web console that analyses a QRadar offence and presents the results in tabbed views:
 an indicative decision (P2 to P5) with explainable signals, actors and network zones,
