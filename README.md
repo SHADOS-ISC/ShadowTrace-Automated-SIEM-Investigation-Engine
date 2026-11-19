@@ -11,11 +11,10 @@ ShadowTrace also provides explainable investigation signals, indicative P2–P5 
 ## Screenshots
 
 ### Investigation overview
-![Synthesis tab](templates
-/screenshot-synthesis.svg)
+![Synthesis tab](templates/screenshot-synthesis.svg)
 
 ### Data collection and query diagnostics
-![Data quality tab](docs/screenshot-quality.png)
+![Data quality tab](templates/screenshot-synthesis.svg)
 
 ## Key Features
 
